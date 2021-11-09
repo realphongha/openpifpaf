@@ -311,8 +311,8 @@ class CocoKp(openpifpaf.datasets.DataModule, openpifpaf.Configurable):
 
     def eval_loader(self):
         eval_data = CocoDataset(
-            image_dir=self.eval_image_dir,
-            ann_file=self.eval_annotations,
+            image_dir=self.val_image_dir,
+            ann_file=self.val_annotations,
             preprocess=self._eval_preprocess(),
             annotation_filter=self.eval_annotation_filter,
             min_kp_anns=self.min_kp_anns if self.eval_annotation_filter else 0,
@@ -325,7 +325,7 @@ class CocoKp(openpifpaf.datasets.DataModule, openpifpaf.Configurable):
 
     def metrics(self):
         return [openpifpaf.metric.Coco(
-            pycocotools.coco.COCO(self.eval_annotations),
+            pycocotools.coco.COCO(self.val_annotations),
             max_per_image=20,
             category_ids=[1],
             iou_type='keypoints',
